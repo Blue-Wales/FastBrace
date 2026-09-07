@@ -33,6 +33,10 @@ FastBrace is a **lightweight scaffolding built on FastAPI, Python's high-perform
 
 Start the local docs dev server:
 
+Online documentation available at ["/click me/"](https://docs.fastbrace.online/).
+
+
+
 ```bash
 cd docs && npm install && npm run docs:dev
 ```

@@ -171,8 +171,11 @@ Because VitePress lives in the `docs/` subdirectory in this project, fill in the
 | Framework preset                    | `None` (no need to select the VitePress preset) |
 | Build command                       | `cd docs && npm install && npm run docs:build` |
 | Build output directory              | `docs/.vitepress/dist`                  |
+| Deploy command                      | `npx wrangler pages deploy docs/.vitepress/dist --project-name <your-project-name>` |
 
 > **Note**: Cloudflare's built-in VitePress framework preset (build command `npx vitepress build`, build output directory `.vitepress/dist`) assumes VitePress is at the repository root. This project keeps VitePress in the `docs/` subdirectory, so you must set the build command and output directory manually and select the framework preset `None`.
+
+> **Important**: The deploy command defaults to `npx wrangler deploy` (which deploys a Workers script) and fails for a static site with `Could not detect a directory containing static files`. Change it to `npx wrangler pages deploy docs/.vitepress/dist --project-name <your-project-name>`, replacing `<your-project-name>` with the project name you entered when creating the Pages application in Cloudflare (the part before `.pages.dev`). Without `--project-name`, it fails with `Missing Pages project name`.
 
 #### 4. Start the first deployment
 

@@ -158,47 +158,27 @@ ssh-copy-id -i ~/.ssh/docs_deploy_key.pub deploy@your-server
 
 Cloudflare Pages 是 Cloudflare 提供的静态站点托管与持续部署服务，支持从 Git 仓库自动构建与发布，免费额度即可满足文档站需求。域名默认是 `*.pages.dev`，也可以绑定自己的自定义域名。
 
-### 方式一：通过 Cloudflare Dashboard 连接 Git 仓库
+### 方式一：本地构建，然后上传cloudflare部署
 
-这是最推荐的零配置方式，无需在本地安装任何 Cloudflare 相关 CLI 工具。
+这是目前最推荐的零配置方式，无需在本地安装任何 Cloudflare 相关 CLI 工具。
 
-#### 1. 推送代码到 Git 远程仓库
-
-确保项目（含 `docs/` 目录）已推送到 GitHub 等支持的代码托管平台：
-
-```bash
-git remote add origin https://github.com/<你的用户名>/FastBrace.git
-git branch -M main
-git push -u origin main
-```
-
-#### 2. 在 Cloudflare 创建 Pages 项目
-
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)，进入 **Workers & Pages** 页面。
-2. 点击 **创建应用程序**（Create application）。
-3. 选择 **Pages** 标签页。
-4. 点击 **连接到 Git**（Connect to Git），并选择 FastBrace 仓库，然后点击 **开始搭建**（Begin setup）。
-
-#### 3. 配置构建设置
-
-由于本项目的 VitePress 位于 `docs/` 子目录，请按以下方式填写构建设置：
-
-| 配置项          | 值                                   |
-| --------------- | ------------------------------------ |
-| 生产分支        | `main`                               |
-| 框架预设        | `None`（无需选择 VitePress 预设）    |
-| 构建命令        | `cd docs && npm install && npm run docs:build` |
-| 构建输出目录    | `docs/.vitepress/dist`              |
-
-> **说明**：Cloudflare 自带的 VitePress 框架预设（构建命令 `npx vitepress build`、构建输出目录 `.vitepress/dist`）假定 VitePress 位于仓库根目录。本项目将 VitePress 放在 `docs/` 子目录，因此需要手动指定构建命令与输出目录，选择框架预设 `None` 即可。
-
-#### 4. 开始首次部署
-
-点击 **保存并部署**（Save and Deploy）。Cloudflare 会自动安装依赖、构建站点并发布，完成后你会获得一个 `https://<项目名>.pages.dev` 的访问地址，同时每次提交并推送到 `main` 分支时都会自动重新构建并部署。
-
-> **提示**：Pull Request 还会生成**预览部署**（Preview deployment），便于在上线前预览文档改动效果。
+1. 本地执行make docs-build， 产出的静态资源在docs/.vitepress/dist下
+2. 进入cloudflare主页，找到左侧侧边栏 Build，然后选择Build下 Compute --->  Workers &Pages
+   1. ![截屏2026-09-07 20.29.52](https://picgocloud.com/m/5272cd20-0dcf-473d-8c5c-de51c04a5fec.png)
+3. 点击右上角 Create application，选择Upload your static files
+   1. ![截屏2026-09-07 20.31.52](https://picgocloud.com/m/73ce3a72-c71b-47fe-bf56-db4398f9f972.png)
+4. 最后选择部署，等待部署结果
 
 
+
+### 绑定自定义域名 （可选）
+
+如果部署完文档站以后，想要绑定自己的自定义域名可以采用以下步骤
+
+1. 去云厂商诸如阿里云、腾讯云或者cloudflare中购买域名
+2. 在cloudflare侧边栏，找到Domains下Overview，然后点击Add domain新增域名， 按照要求一步步配置
+3. 最后获取Cloudflare 分配 NS的两个信息，到云厂商的dns修改中进行修改
+4. 
 
 ### 配置静态资源缓存（可选）
 

@@ -48,5 +48,3 @@ FastBrace是一个基于**Fastapi构建的轻量级高性能脚手架**，目标
 - 支持项目发展：[赞助](/community/sponsor)
 
 
-
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_new -C "Blue-Wales"
