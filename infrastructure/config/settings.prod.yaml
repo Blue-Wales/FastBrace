@@ -1,0 +1,138 @@
+# FastBrace - development configuration
+# =================================================
+# Sensitive values must be injected with environment variables, for example:
+# JWT__SECRET_KEY, RSA__PRIVATE_KEY, DB__PASSWORD, REDIS_DB__PASSWORD,
+# OBJECT_STORAGE__ACCESS_KEY, OBJECT_STORAGE__SECRET_KEY, EMAIL__PASSWORD.
+
+service_name: "FastBrace"
+service_version: "v2.0.0"
+login_url: "https://example.com/login"
+exclude_path: ['/login', '/health']
+
+# JWT authentication
+jwt:
+  secret_key: "CHANGE_ME_WITH_ENV_JWT__SECRET_KEY"
+  expire_time: 86400
+  refresh_expire_time: 604800
+  algorithm: "HS256"
+
+# RSA encryption
+rsa:
+  enabled: false
+  key_size: 2048
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    CHANGE_ME_WITH_ENV_RSA__PRIVATE_KEY
+    -----END PRIVATE KEY-----
+
+# Database
+db:
+  drivername: 'mysql+pymysql'
+  host: "CHANGE_ME_WITH_ENV_DB__HOST"
+  port: 3306
+  username: "CHANGE_ME_WITH_ENV_DB__USERNAME"
+  password: "CHANGE_ME_WITH_ENV_DB__PASSWORD"
+  database: "CHANGE_ME_WITH_ENV_DB__DATABASE"
+
+# Logging. Directories match docker-compose.yml volume mounts.
+api_log:
+  log_dir: '/log/FastBrace/api'
+  log_name: 'app'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 14
+  error_log_rotation: "100 MB"
+  error_log_retention: 14
+  use_async_logging: true
+
+event_log:
+  log_dir: '/log/FastBrace/event'
+  log_name: 'event'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 14
+  error_log_rotation: "100 MB"
+  error_log_retention: 14
+  use_async_logging: true
+
+cron_log:
+  log_dir: '/log/FastBrace/cron'
+  log_name: 'cron'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 14
+  error_log_rotation: "100 MB"
+  error_log_retention: 14
+  use_async_logging: true
+
+# Object storage
+object_storage:
+  access_key: "CHANGE_ME_WITH_ENV_OBJECT_STORAGE__ACCESS_KEY"
+  secret_key: "CHANGE_ME_WITH_ENV_OBJECT_STORAGE__SECRET_KEY"
+  endpoint: 'oss-cn-beijing.aliyuncs.com'
+  bucket_name: "CHANGE_ME_WITH_ENV_OBJECT_STORAGE__BUCKET_NAME"
+  object_domain: 'https://static.example.com/'
+  watermark_template: ''
+  upload_path: 'uploads/'
+
+# Redis
+redis_db:
+  host: 'CHANGE_ME_WITH_ENV_REDIS_DB__HOST'
+  port: 6379
+  password: 'CHANGE_ME_WITH_ENV_REDIS_DB__PASSWORD'
+
+# Email
+email:
+  smtp_server: "CHANGE_ME_WITH_ENV_EMAIL__SMTP_SERVER"
+  smtp_port: 465
+  username: "CHANGE_ME_WITH_ENV_EMAIL__USERNAME"
+  password: "CHANGE_ME_WITH_ENV_EMAIL__PASSWORD"
+  use_tls: true
+  sender_name: "FastBrace"
+  company_name: "FastBrace"
+
+# Event bus
+event_bus:
+  local_transport_type: "memory"
+  cross_domain_transport_type: "celery"
+  name: "vben-fastapi-framework"
+  enable_event_store: true
+  local_event_bus_concurrency: 0
+  cross_domain_event_bus_concurrency: 1
+
+# Celery
+celery:
+  result_expires: 86400
+  task_serializer: "json"
+  result_serializer: "json"
+  accept_content: [ "json" ]
+  timezone: "Asia/Shanghai"
+  enable_utc: true
+  task_acks_late: true
+  task_reject_on_worker_lost: true
+  task_publish_retry: true
+  task_publish_retry_policy:
+    max_retries: 3
+    interval_start: 0
+    interval_step: 0.5
+    interval_max: 3.0
+  beat:
+    scheduler: "redbeat.RedBeatScheduler"
+    beat_max_loop_interval: 30
+    beat_sync_every: 5
+    key_prefix: "vben_fastapi_framework_prod_beat"
+    module_path: "application.tasks"
+
+# SMS
+sms:
+  access_key_id: "CHANGE_ME_WITH_ENV_SMS__ACCESS_KEY_ID"
+  secret_access_key: "CHANGE_ME_WITH_ENV_SMS__SECRET_ACCESS_KEY"
+
+sms_code:
+  default: ""
+  verification: ""
+  notification: ""
+  reminder: ""
+
+sms_err_codes:
+  "OK": 'Success'

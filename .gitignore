@@ -1,0 +1,111 @@
+# Python 编译缓存
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Python 扩展与本地版本
+*.so
+.python-version
+
+# 系统与编辑器文件
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+.run/
+
+# 环境变量与虚拟环境
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# uv 本地包缓存
+__pypackages__/
+
+# 构建产物
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+
+# 日志与运行时文件
+logs/
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+celerybeat-schedule
+celerybeat.pid
+.CONTAINER_ALREADY_STARTED_PLACEHOLDER
+
+# 测试与类型检查缓存
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+.ruff_cache/
+cover/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# 数据库与框架运行目录
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache/
+.scrapy/
+
+# 文档与临时产物
+docs/_build/
+/site/
+.pybuilder/
+target/
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+*.mo
+*.pot
+*.json
+!docs/package.json
+!docs/package-lock.json
+cython_debug/
+# agent-docs/ 
+
+# Node 依赖与 VitePress 文档站点产物
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/

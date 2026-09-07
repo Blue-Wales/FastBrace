@@ -1,0 +1,163 @@
+name: backend-ci-cd
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: backend-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-push:
+    name: 构建并推送镜像
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    outputs:
+      run_number: ${{ github.run_number }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 生成镜像名
+        id: image
+        env:
+          ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
+          ACR_NAMESPACE: ${{ secrets.ACR_NAMESPACE }}
+          ACR_REPO: ${{ secrets.ACR_REPO }}
+        run: |
+          REPO="${ACR_REGISTRY}/${ACR_NAMESPACE}/${ACR_REPO:-backend}"
+          FULL_IMAGE="${REPO}:run-${{ github.run_number }}"
+          echo "full_image=${FULL_IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "repo=${REPO}" >> "$GITHUB_OUTPUT"
+
+      - name: 登录阿里云 ACR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ACR_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 构建并推送
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/Dockerfile
+          push: true
+          tags: ${{ steps.image.outputs.full_image }}
+          # 关闭 provenance/sbom 证明附件，否则 BuildKit 会推送 OCI 索引清单，
+          # 其中包含 application/vnd.oci.empty.v1+json 空描述符，阿里云 ACR 个人版不识别会报 unknown manifest class
+          provenance: false
+          sbom: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  upload-deploy-files:
+    name: 上传部署文件
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 配置 SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.DEPLOY_PORT || '22' }}" -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: 同步 deploy 目录到服务器
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          set -e
+          SSH_OPTS=(-i ~/.ssh/deploy_key -p "$DEPLOY_PORT" -o BatchMode=yes -o StrictHostKeyChecking=yes)
+
+          # 服务器上创建部署目录（compose 文件中 env_file 引用 ../.env，故 compose 必须位于 $DEPLOY_PATH/deploy/ 下）
+          ssh "${SSH_OPTS[@]}" "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_PATH/deploy'"
+
+          # 通过 SSH 管道同步 deploy 目录（仅 compose 运行所需文件，排除 Dockerfile/调试脚本）
+          tar -C deploy --exclude='Dockerfile*' --exclude='deploy.sh' -czf - . \
+            | ssh "${SSH_OPTS[@]}" "$DEPLOY_USER@$DEPLOY_HOST" "tar -C '$DEPLOY_PATH/deploy' -xzf -"
+
+  deploy:
+    name: 部署生产环境
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [build-and-push, upload-deploy-files]
+    environment: production
+    steps:
+      - name: 配置 SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.DEPLOY_PORT || '22' }}" -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: 部署到服务器
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
+          ACR_NAMESPACE: ${{ secrets.ACR_NAMESPACE }}
+          ACR_REPO: ${{ secrets.ACR_REPO }}
+          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+          APP_ENV_VARS: ${{ secrets.APP_ENV_VARS }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          FULL_IMAGE="${ACR_REGISTRY}/${ACR_NAMESPACE}/${ACR_REPO:-backend}:run-${RUN_NUMBER}"
+          echo "部署镜像: $FULL_IMAGE"
+
+          APP_ENV_VARS_B64="$(printf '%s' "$APP_ENV_VARS" | base64 -w 0)"
+
+          ssh -i ~/.ssh/deploy_key \
+            -p "$DEPLOY_PORT" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=40 \
+            "$DEPLOY_USER@$DEPLOY_HOST" << EOF
+          set -e
+          cd "$DEPLOY_PATH"
+
+          echo "$ACR_PASSWORD" | docker login "$ACR_REGISTRY" -u "$ACR_USERNAME" --password-stdin
+
+          printf '%s' "$APP_ENV_VARS_B64" | base64 -d > .env
+
+          docker pull "$FULL_IMAGE"
+
+          HOUSE_IMAGE="$FULL_IMAGE" docker compose -f deploy/docker-compose.yml down --remove-orphans || true
+
+          docker image prune -f
+          IMAGE_REPO="${FULL_IMAGE%:*}"
+          docker images "\$IMAGE_REPO" --format '{{.ID}}' | tail -n +3 | xargs -r docker rmi -f || true
+
+          HOUSE_IMAGE="$FULL_IMAGE" docker compose -f deploy/docker-compose.yml up -d
+
+          for i in \$(seq 1 20); do
+            if curl -fsS "http://127.0.0.1:\${CONFIG_PORT:-8888}/health" | grep -q '"status":"healthy"'; then
+              echo "健康检查通过"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "健康检查超时"
+          HOUSE_IMAGE="$FULL_IMAGE" docker compose -f deploy/docker-compose.yml logs --tail=50 api
+          exit 1
+          EOF

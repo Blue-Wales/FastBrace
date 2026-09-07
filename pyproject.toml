@@ -1,0 +1,158 @@
+[project]
+name = "FastBrace"
+version = "2.0.0"
+description = "基于 FastAPI 和 DDD 分层架构的企业级后端框架"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "框架研发团队" }
+]
+keywords = ["fastapi", "ddd", "企业级", "后端", "基础框架"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: FastAPI",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "pyyaml>=6.0",
+    "loguru>=0.7.0",
+    "redis>=5.0.0",
+    "celery>=5.3.0",
+    "celery-redbeat>=2.3.0",
+    "pyjwt>=2.10.0",
+    "bcrypt>=4.3.0",
+    "python-multipart>=0.0.6",
+    "oss2>=2.18.0",
+    "click>=8.1.0",
+    "PyMySQL>=1.1.0",
+    "alembic>=1.13.0",
+    "cryptography>=42.0.0",
+    "jinja2>=3.1.0",
+    "pydantic[email]",
+    "requests>=2.34.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.26.0",
+    "mdformat>=0.7.22",
+    "mdformat-gfm>=0.3.6",
+    "pre-commit>=3.6.0",
+    "ruff>=0.15.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+framework = "main:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["api", "application", "domain", "infrastructure", "entrance", "event_handlers"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [
+    ".venv",
+    "infrastructure/utils/statics",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle 错误
+    "W",      # pycodestyle 警告
+    "F",      # pyflakes 静态检查
+    "I",      # import 排序
+    "B",      # 常见缺陷检查
+    "C4",     # 推导式优化检查
+    "RET",    # return 语句一致性
+    "SIM",    # 简化可读性较差的语句
+    "UP",     # Python 版本升级建议
+    "RUF",    # Ruff 专属规则
+]
+ignore = [
+    "E501",   # 行宽交给格式化工具处理
+    "B008",   # 保留 FastAPI Depends/Form 等参数默认值写法
+    "B904",   # 现有异常处理大量未使用 from，后续按模块逐步收敛
+    "UP009",  # 保留项目要求的 UTF-8 文件头
+    "RUF001", # 中文标点和业务文案不做 ASCII 替换
+    "RUF002", # 中文注释不做 ASCII 替换
+    "RUF003", # 中文文档字符串不做 ASCII 替换
+]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/**/*.py" = [
+    "T201",   # 运维脚本允许控制台输出
+    "B904",   # 脚本异常链不强制
+    "SIM",    # 脚本以清晰流程优先
+]
+"infrastructure/migrations/**/*.py" = [
+    "B",
+    "I001",
+    "RET",
+    "SIM",
+    "T201",
+    "UP",
+]
+"tests/**/*.py" = [
+    "T201",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["api", "application", "domain", "entrance", "event_handlers", "infrastructure"]
+
+[tool.mypy]
+python_version = "3.10"
+explicit_package_bases = true
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+disable_error_code = [
+    "arg-type",
+    "assignment",
+    "attr-defined",
+    "call-arg",
+    "misc",
+    "no-any-return",
+    "prop-decorator",
+    "return-value",
+    "union-attr",
+    "valid-type",
+    "var-annotated",
+]
+exclude = [
+    "^scripts/",
+    "^infrastructure/migrations/",
+    "^infrastructure/utils/statics/",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "mdformat-frontmatter>=2.1.2",
+]

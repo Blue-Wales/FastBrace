@@ -1,0 +1,102 @@
+services:
+  api:
+    image: ${HOUSE_IMAGE}
+    env_file:
+      - ../.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - app_log:/log/FastBrace/api
+    command:
+      - python
+      - main.py
+      - server
+      - api
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8889"
+      - --no-access-log
+    ports:
+      - "${CONFIG_PORT:-8889}:8889"
+    stop_grace_period: 30s
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+
+  event-bus:
+    image: ${HOUSE_IMAGE}
+    user: "10001:10001"
+    env_file:
+      - ../.env
+    depends_on:
+      api:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - event_log:/log/FastBrace/event
+    entrypoint: ["python", "main.py"]
+    command: ["server", "events"]
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+        reservations:
+          cpus: "0.2"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+  cron_jobs:
+    image: ${HOUSE_IMAGE}
+    env_file:
+      - ../.env
+    depends_on:
+      api:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - cron_log:/log/FastBrace/cron
+    entrypoint: ["python", "main.py"]
+    command: ["server", "cron_jobs"]
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+  # 轻量日志查看器：自动发现所有容器日志，浏览器打开即可搜索/过滤/实时查看
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    ports:
+      - "${DOZZLE_PORT:-8890}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # Dozzle v10 不再支持环境变量配置账号密码，需挂载 users.yaml。
+    # 内网部署可直接去掉认证，通过防火墙限制 8890 端口访问来源即可。
+    # 如需认证，参考 docs/cn/advanced/log-monitoring.md 中「配置访问认证」章节。
+
+volumes:
+  app_log:
+    driver: local
+  event_log:
+    driver: local
+  cron_log:
+    driver: local

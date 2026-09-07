@@ -1,0 +1,137 @@
+# FastBrace - development configuration
+# ==================================================
+# This file is safe for public repositories. Replace local values with your own
+# development services, and inject production secrets through environment variables.
+
+service_name: "FastBrace"
+service_version: "v2.0.0"
+login_url: "http://localhost:8080/login"
+exclude_path: ['/docs', '/login', '/openapi.json', '/health']
+
+# JWT authentication
+jwt:
+  secret_key: "change-me-dev-secret"
+  expire_time: 86400
+  refresh_expire_time: 604800
+  algorithm: "HS256"
+
+# RSA encryption
+rsa:
+  enabled: false
+  key_size: 2048
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    CHANGE_ME_WITH_ENV_RSA__PRIVATE_KEY
+    -----END PRIVATE KEY-----
+
+# Database
+db:
+  drivername: 'mysql+pymysql'
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: "PASSWORD"
+  database: "FastBrace_dev"
+
+# Logging
+api_log:
+  log_dir: 'logs/FastBrace/api'
+  log_name: 'api'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 5
+  error_log_rotation: "100 MB"
+  error_log_retention: 3
+  use_async_logging: true
+
+event_log:
+  log_dir: 'logs/FastBrace/event'
+  log_name: 'event'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 5
+  error_log_rotation: "100 MB"
+  error_log_retention: 3
+  use_async_logging: true
+
+cron_log:
+  log_dir: 'logs/FastBrace/cron'
+  log_name: 'cron'
+  debug: false
+  log_rotation: "200 MB"
+  log_retention: 5
+  error_log_rotation: "100 MB"
+  error_log_retention: 3
+  use_async_logging: true
+
+# Object storage
+object_storage:
+  access_key: ""
+  secret_key: ""
+  endpoint: 'oss-cn-beijing.aliyuncs.com'
+  bucket_name: "FastBrace-dev"
+  object_domain: ''
+  watermark_template: ''
+  upload_path: 'uploads/'
+
+# Redis
+redis_db:
+  host: '127.0.0.1'
+  port: 6379
+  password: ''
+
+# Email
+email:
+  smtp_server: ""
+  smtp_port: 465
+  username: ""
+  password: ""
+  use_tls: true
+  sender_name: "FastBrace"
+  company_name: "FastBrace"
+
+# Event bus
+event_bus:
+  local_transport_type: "memory"
+  cross_domain_transport_type: "celery"
+  name: "FastBrace"
+  enable_event_store: true
+  local_event_bus_concurrency: 0
+  cross_domain_event_bus_concurrency: 1
+
+# Celery
+celery:
+  result_expires: 86400
+  task_serializer: "json"
+  result_serializer: "json"
+  accept_content: [ "json" ]
+  timezone: "Asia/Shanghai"
+  enable_utc: true
+  task_acks_late: true
+  task_reject_on_worker_lost: true
+  task_publish_retry: true
+  task_publish_retry_policy:
+    max_retries: 3
+    interval_start: 0
+    interval_step: 0.5
+    interval_max: 3.0
+  beat:
+    scheduler: "redbeat.RedBeatScheduler"
+    beat_max_loop_interval: 30
+    beat_sync_every: 5
+    key_prefix: "FastBrace_beat"
+    module_path: "application.tasks"
+
+# SMS
+sms:
+  access_key_id: ""
+  secret_access_key: ""
+
+sms_code:
+  default: ""
+  verification: ""
+  notification: ""
+  reminder: ""
+
+sms_err_codes:
+  "OK": 'Success'

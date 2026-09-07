@@ -1,0 +1,28 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+
+      - id: mypy
+        name: mypy
+        entry: uv run mypy api application domain entrance event_handlers infrastructure main.py tests
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: layer-style
+        name: layer-style
+        entry: uv run python scripts/check_headers.py
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: mdformat
+        name: mdformat
+        entry: uv run mdformat --check
+        language: system
+        types: [markdown]

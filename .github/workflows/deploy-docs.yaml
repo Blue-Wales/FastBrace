@@ -1,0 +1,75 @@
+name: deploy-docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+  workflow_dispatch:
+
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: 构建并部署文档站
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: docs-production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: 安装依赖
+        working-directory: docs
+        run: npm ci
+
+      - name: 构建文档站
+        working-directory: docs
+        run: npm run docs:build
+
+      - name: 配置 SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DOCS_DEPLOY_KEY }}" > ~/.ssh/docs_deploy_key
+          chmod 600 ~/.ssh/docs_deploy_key
+          ssh-keyscan -p "${{ secrets.DOCS_DEPLOY_PORT || '22' }}" -H "${{ secrets.DOCS_DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: 部署到服务器
+        env:
+          DEPLOY_HOST: ${{ secrets.DOCS_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DOCS_DEPLOY_PORT || '22' }}
+          DEPLOY_USER: ${{ secrets.DOCS_DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DOCS_DEPLOY_PATH }}
+        run: |
+          echo "部署文档站到 ${DEPLOY_HOST}:${DEPLOY_PATH}"
+
+          # 清理旧的构建产物并上传新文件
+          ssh -i ~/.ssh/docs_deploy_key \
+            -p "$DEPLOY_PORT" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" "rm -rf ${DEPLOY_PATH}/*"
+
+          scp -i ~/.ssh/docs_deploy_key \
+            -P "$DEPLOY_PORT" \
+            -r docs/.vitepress/dist/* \
+            "$DEPLOY_USER@$DEPLOY_HOST:${DEPLOY_PATH}/"
+
+          # 重新加载 Nginx
+          ssh -i ~/.ssh/docs_deploy_key \
+            -p "$DEPLOY_PORT" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" "sudo nginx -s reload || true"
+
+          echo "文档站部署完成: https://docs.FastBrace.dev"

@@ -1,0 +1,36 @@
+/* ========== 导航栏 Logo 样式 ========== */
+.VPNavBar .logo {
+  height: 36px !important;
+}
+
+/* ========== Hero 区域 Logo 3D 立体效果 ========== */
+.VPHero .image-src {
+  max-width: 420px !important;
+  max-height: 420px !important;
+  filter: drop-shadow(0 8px 24px rgba(0, 180, 255, 0.35));
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.4s ease;
+  cursor: pointer;
+}
+
+.VPHero .image-src:hover {
+  transform: scale(1.08) translateY(-4px);
+  filter: drop-shadow(0 16px 40px rgba(0, 180, 255, 0.5));
+}
+
+/* 暗色模式下的光晕效果 */
+.dark .VPHero .image-src {
+  filter: drop-shadow(0 8px 24px rgba(0, 200, 255, 0.4));
+}
+
+.dark .VPHero .image-src:hover {
+  filter: drop-shadow(0 16px 40px rgba(0, 200, 255, 0.6));
+}
+
+/* ========== 响应式适配 ========== */
+@media (max-width: 768px) {
+  .VPHero .image-src {
+    max-width: 300px !important;
+    max-height: 300px !important;
+  }
+}

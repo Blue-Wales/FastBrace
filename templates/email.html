@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+          <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+          <title>FastBrace</title>
+          <style>
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
+
+            body {
+              background-color: #DDD;
+              color: #000;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 12px;
+              margin: 0;
+              line-height: 1.4;
+            }
+
+            .container {
+              max-width: 750px;
+              margin: 0 auto;
+              padding: 40px 14px 20px;
+              background-color: #fff;
+            }
+
+            .header {
+              position: relative;
+              margin-bottom: 24px;
+            }
+
+            .header h1 {
+              font-size: 20px;
+              color: #221815;
+              margin-bottom: 4px;
+              font-weight: bold;
+            }
+
+            .header p {
+              font-size: 12px;
+              color: #888;
+            }
+
+            .logo {
+              position: absolute;
+              top: -20px;
+              right: 0;
+              width: 80px;
+            }
+
+            .welcome {
+              margin-bottom: 20px;
+            }
+
+            .welcome h1 {
+              font-size: 18px;
+              color: #221815;
+              margin-bottom: 10px;
+              font-weight: bold;
+            }
+
+            .welcome-text {
+              line-height: 24px;
+              font-size: 12px;
+              color: #666;
+            }
+
+            .highlight-link {
+              color: #9c61cf;
+              font-weight: bold;
+            }
+
+            .divider {
+              height: 1px;
+              background-color: #f4f4f4;
+              margin: 20px 0;
+            }
+
+            .section-title {
+              font-size: 18px;
+              color: #221815;
+              margin-bottom: 6px;
+              font-weight: bold;
+            }
+
+            .section-subtitle {
+              font-size: 14px;
+              color: #666;
+              font-weight: bold;
+            }
+
+            .info-row {
+              height: 24px;
+              line-height: 24px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+
+            .info-label {
+              font-size: 12px;
+              color: #666;
+            }
+
+            .info-value {
+              font-size: 12px;
+              color: #221815;
+              text-align: right;
+              max-width: 60%;
+            }
+
+            .date-value {
+              font-size: 12px;
+              color: #221815;
+              text-align: right;
+              max-width: 60%;
+              font-weight: 800;
+            }
+
+            .address-value {
+              max-width: 80%;
+            }
+
+            .contract-info {
+              font-size: 16px;
+              color: #221815;
+              margin: 6px 0;
+            }
+
+            .disclaimer {
+              min-height: 24px;
+              line-height: 20px;
+              font-size: 12px;
+              color: #666;
+              font-style: normal;
+            }
+
+            .guide-content {
+              font-size: 12px;
+              color: #888;
+              margin-bottom: 20px;
+            }
+
+            .safety-tips {
+              margin-bottom: 20px;
+            }
+
+            .tip-item {
+              display: flex;
+              align-items: flex-start;
+              margin-bottom: 12px;
+            }
+
+            .tip-item:last-child {
+              margin-bottom: 0;
+            }
+
+            .tip-bullet {
+              width: 8px;
+              height: 8px;
+              background-color: #888;
+              border-radius: 50%;
+              margin-right: 10px;
+              margin-top: 8px;
+              flex-shrink: 0;
+            }
+
+            .tip-text {
+              font-size: 12px;
+              color: #888;
+              line-height: 24px;
+              flex: 1;
+            }
+
+            .wishes-content {
+              line-height: 24px;
+              font-size: 12px;
+              color: #888;
+              margin-bottom: 12px;
+            }
+
+            .footer-title {
+              font-size: 18px;
+              color: #221815;
+              font-weight: bold;
+              /* text-align: center; */
+              margin-bottom: 18px;
+            }
+
+            .footer-logo {
+              width: 80px;
+              /* margin: 0 auto; */
+              display: block;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <!-- Header Section -->
+            <div class="header">
+              <h1>您的FastBrace项目已创建成功！</h1>
+              <p>Everything you need to know about your FastBrace project</p>
+              <img src="https://img.FastBrace.com/logo.png" alt="FastBrace Logo" class="logo">
+            </div>
+
+            <!-- Welcome Message Section -->
+            <div class="welcome">
+              <h1>亲爱的 {{name}}，</h1>
+              <div class="welcome-text">
+                感谢您选择FastBrace，您创建的项目已成功部署！平台已为您准备了详细的<span class="highlight-link">【项目指南】</span>，帮助您快速上手FastBrace框架的开发与管理。
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Project Information Section -->
+            <h1 class="section-title">您的项目信息 <span class="section-subtitle">Your Project</span></h1>
+            <div class="info-row">
+              <span class="info-label">项目名称</span>
+              <span class="info-value">{{projectName}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">项目类型</span>
+              <span class="info-value">{{projectType}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">项目编号</span>
+              <span class="info-value">{{projectCode}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">负责人</span>
+              <span class="info-value">{{manager}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">创建日期</span>
+              <span class="date-value">{{createDate}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">截止日期</span>
+              <span class="date-value">{{deadline}}</span>
+            </div>
+
+            <h1 class="section-title" style="margin: 30px 0;">项目文档 可登录平台下载或联系技术支持</h1>
+            <div class="disclaimer" style="margin-bottom: 30px;">*项目未完成前，请定期备份数据，以免丢失</div>
+
+            <!-- Project Status Section -->
+            <img src="https://img.FastBrace.com/project-status.png" alt="项目状态" style="width: 100%; border-radius: 20px; margin: 20px 0;">
+
+            <div class="divider"></div>
+
+            <!-- Project Guide Section -->
+            <h1 class="section-title">项目指南 <span class="section-subtitle">Project Guide</span></h1>
+            <div class="guide-content">{{projectGuide}}</div>
+
+            <div class="divider"></div>
+
+            <!-- Security Tips Section -->
+            <h1 class="section-title">安全提示 <span class="section-subtitle">Security Tips</span></h1>
+            <div class="safety-tips">
+              <div class="tip-item">
+                <div class="tip-bullet"></div>
+                <div class="tip-text">请妥善保管您的账号密码，定期更换密码，避免使用简单密码。建议开启双重认证功能，提高账户安全性。</div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-bullet"></div>
+                <div class="tip-text">项目数据属于重要资产，请定期备份。平台提供自动备份服务，但建议您在本地保留一份副本。</div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-bullet"></div>
+                <div class="tip-text">警惕网络钓鱼攻击，不要点击可疑链接，不要向陌生人泄露验证码和敏感信息。如遇异常，请立即联系技术支持。</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- FastBrace Wishes Section -->
+            <h1 class="section-title">FastBrace寄语 <span class="section-subtitle">FastBrace Wishes</span></h1>
+            <div class="wishes-content">
+              FastBrace是一场创新与技术的旅程，每一个项目都是一次探索未知的机会。在数字化的浪潮中，挑战与机遇并存，保持好奇心和学习热情是成功的关键。无论遇到什么困难，都请相信技术的力量和团队的支持。
+            </div>
+            <div class="wishes-content">
+              再次感谢你选择FastBrace，愿你的每一个创意都能实现，愿你的每一个项目都能取得成功！
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Footer Section -->
+            <h1 class="footer-title">FastBrace【全球领先的Agent优先FastAPI后端开发框架】</h1>
+            <img src="https://img.FastBrace.com/logo.png" alt="FastBrace Logo" class="footer-logo">
+          </div>
+        </body>
+        </html>

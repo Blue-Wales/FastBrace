@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <g id="dy-note">
+      <path d="M58 22c1.5 6 6 10.5 12 11.5v9c-5-.7-9.2-2.8-12-6.2V58a15 15 0 1 1-9-13.9v9.3a6 6 0 1 0 3 5.2V22z"/>
+    </g>
+  </defs>
+  <rect width="96" height="96" rx="20" fill="#161823"/>
+  <use href="#dy-note" fill="#25F4EE" transform="translate(-2.4 -1.8)"/>
+  <use href="#dy-note" fill="#FE2C55" transform="translate(2.4 1.8)"/>
+  <use href="#dy-note" fill="#FFFFFF"/>
+</svg>

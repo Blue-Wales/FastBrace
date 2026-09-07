@@ -1,0 +1,19 @@
+# 兼容 pip 部署场景；日常开发请优先使用 pyproject.toml 与 uv。
+PyYAML==6.0.2
+pydantic-settings==2.8.1
+SQLAlchemy==2.0.40
+loguru==0.7.3
+uvicorn[standard]==0.34.0
+oss2==2.18.6
+redis==5.2.1
+PyJWT==2.10.1
+celery==5.3.6
+celery-redbeat==2.3.2
+PyMySQL==1.1.1
+Jinja2==3.1.6
+click==8.1.8
+fastapi==0.115.12
+python-multipart==0.0.20
+bcrypt==4.3.0
+alembic==1.14.1
+cryptography==44.0.2
