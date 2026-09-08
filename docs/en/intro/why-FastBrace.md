@@ -1,6 +1,12 @@
 # Why FastBrace
 
-Starting from my own needs: in the AI era, most of a developer's work can be done with the help of AI. I hoped to find a more lightweight **AI foundation** that would let me focus on implementing business scenarios, cutting down the repeated polishing of every process and technical detail outside of the business itself. Specifically, I expected an **engineering scaffold** to meet at least the following points:
+
+
+## Background
+
+
+
+In the AI era, the speed and efficiency of building products have greatly improved. Choosing a good **AI foundation/scaffold** to build products can double your productivity while significantly reducing development, collaboration, and maintenance costs. Therefore, I hoped for an **AI foundation/scaffold with clear architecture, lightweight design, and high performance** that allows teams or individual developers to avoid repeatedly reinventing the wheel, and greatly reduces the cost of using AI tools so they can focus more on implementing specific business scenarios. An ideal **AI foundation/scaffold** should meet at least the following requirements:
 
 1. Fit SME teams and independent developers, lowering long-term maintenance costs and reducing rework caused by technical debt
 2. Unify conventions and workflows, improve cache hit rates during AI development, and greatly reduce development costs
@@ -8,6 +14,10 @@ Starting from my own needs: in the AI era, most of a developer's work can be don
 4. Be lightweight and high-performance — small, fast steps: quick development and quick release for validation
 5. Have high cohesion and low coupling, minimizing coupling with frontend frameworks so it can connect to any kind of client
 
+
+
+
+## Research & Analysis
 
 
 
@@ -22,7 +32,7 @@ After deeply studying the excellent open-source frameworks on the market (such a
 | Tech stack | uv + Skill + FastAPI, a pure backend scaffold | React + FastAPI + Docker + Celery full stack |
 | Learning cost | Low: a pure backend scaffold, focused on the backend | Higher: requires mastering frontend, backend, and container orchestration |
 | Beginner friendly | Very: Chinese docs + hands-on practice projects | Average: high full-stack complexity, and the docs are in English |
-| Documentation | Complete Chinese docs covering architecture, features, engineering, and practice | Complete official docs (in English) |
+| Documentation | Complete Chinese and English docs covering architecture, features, engineering, and practice | Complete official docs (in English)                         |
 | Real-world value | Built-in practice projects for learning Python, FastAPI, and AI application development | Mostly template-focused, with little practice content |
 
 </div>

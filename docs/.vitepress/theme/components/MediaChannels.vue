@@ -5,25 +5,25 @@ const channels = [
     name: 'Bilibili',
     logo: '/media/bilibili.svg',
     href: '#',
-    desc: '视频教程与实战演示'
+    desc: '敬请期待！'
   },
   {
     name: '小红书',
     logo: '/media/xiaohongshu.svg',
     href: '#',
-    desc: '开发心得与图文笔记'
+    desc: '敬请期待！'
   },
   {
     name: '抖音',
     logo: '/media/douyin.svg',
     href: '#',
-    desc: '短视频速览项目亮点'
+    desc: '敬请期待！'
   },
   {
     name: '微信公众号',
     logo: '/media/wechat-mp.svg',
     href: '#',
-    desc: '深度文章与版本动态'
+    desc: '敬请期待！'
   }
 ]
 </script>

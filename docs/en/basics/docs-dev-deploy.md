@@ -140,48 +140,26 @@ Besides deploying to your own server with Nginx, you can also use [Cloudflare Pa
 
 Cloudflare Pages is a static hosting and continuous deployment service provided by Cloudflare. It builds and publishes your site automatically from a Git repository; the free tier is more than enough for a documentation site. Domains default to `*.pages.dev`, and you can also connect your own custom domain.
 
-### Option 1: Connect a Git Repository via the Cloudflare Dashboard
+### Option 1: Build Locally, Then Upload to Cloudflare
 
-This is the recommended zero-configuration approach — no Cloudflare CLI tools need to be installed locally.
+This is currently the most recommended zero-configuration approach — no Cloudflare CLI tools need to be installed locally.
 
-#### 1. Push code to a remote Git repository
+1. Run `make docs-build` locally; the static assets are generated under `docs/.vitepress/dist`
+2. Go to the Cloudflare dashboard, find **Build** in the left sidebar, then select **Compute → Workers & Pages**
+   1. ![Screenshot](https://picgocloud.com/m/5272cd20-0dcf-473d-8c5c-de51c04a5fec.png)
+3. Click **Create application** in the upper right corner, then select **Upload your static files**
+   1. ![Screenshot](https://picgocloud.com/m/73ce3a72-c71b-47fe-bf56-db4398f9f972.png)
+4. Finally, choose your deployment and wait for the result
 
-Make sure the project (including the `docs/` directory) is pushed to a supported hosting platform such as GitHub:
 
-```bash
-git remote add origin https://github.com/<your-username>/FastBrace.git
-git branch -M main
-git push -u origin main
-```
 
-#### 2. Create a Pages project in Cloudflare
+### Bind a Custom Domain (Optional)
 
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and go to the **Workers & Pages** page.
-2. Click **Create application**.
-3. Select the **Pages** tab.
-4. Click **Connect to Git**, select the FastBrace repository, then click **Begin setup**.
+If you want to bind your own custom domain after deploying the docs site, follow these steps:
 
-#### 3. Configure the build settings
-
-Because VitePress lives in the `docs/` subdirectory in this project, fill in the build settings as follows:
-
-| Configuration                       | Value                                   |
-| ----------------------------------- | --------------------------------------- |
-| Production branch                   | `main`                                  |
-| Framework preset                    | `None` (no need to select the VitePress preset) |
-| Build command                       | `cd docs && npm install && npm run docs:build` |
-| Build output directory              | `docs/.vitepress/dist`                  |
-| Deploy command                      | `npx wrangler pages deploy docs/.vitepress/dist --project-name <your-project-name>` |
-
-> **Note**: Cloudflare's built-in VitePress framework preset (build command `npx vitepress build`, build output directory `.vitepress/dist`) assumes VitePress is at the repository root. This project keeps VitePress in the `docs/` subdirectory, so you must set the build command and output directory manually and select the framework preset `None`.
-
-> **Important**: The deploy command defaults to `npx wrangler deploy` (which deploys a Workers script) and fails for a static site with `Could not detect a directory containing static files`. Change it to `npx wrangler pages deploy docs/.vitepress/dist --project-name <your-project-name>`, replacing `<your-project-name>` with the project name you entered when creating the Pages application in Cloudflare (the part before `.pages.dev`). Without `--project-name`, it fails with `Missing Pages project name`.
-
-#### 4. Start the first deployment
-
-Click **Save and Deploy**. Cloudflare will automatically install dependencies, build the site, and publish it. When finished, you will get an access URL like `https://<project-name>.pages.dev`. Every time you commit and push to the `main` branch, it will rebuild and redeploy automatically.
-
-> **Tip**: Pull Requests also generate **preview deployments**, so you can see how changes look before going live.
+1. Purchase a domain from a cloud provider such as Alibaba Cloud, Tencent Cloud, or Cloudflare
+2. In the Cloudflare sidebar, go to **Domains → Overview**, then click **Add domain** and follow the setup wizard
+3. Finally, obtain the two NS records assigned by Cloudflare and update them in your domain provider's DNS settings
 
 ### Configuring Static Asset Caching (Optional)
 
