@@ -41,8 +41,6 @@ Online documentation available at ["/click me/"](https://docs.fastbrace.online/)
 cd docs && npm install && npm run docs:dev
 ```
 
-See [Docs Dev & Deploy](https://docs.FastBrace.dev/basics/docs-dev-deploy) for details.
-
 ## Quick Start
 
 ### Requirements

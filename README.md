@@ -40,9 +40,6 @@ cd docs && npm install && npm run docs:dev
 ```
 
 
-
-详见 [文档站开发与部署](https://docs.FastBrace.dev/basics/docs-dev-deploy)。
-
 ## 快速开始
 
 ### 环境要求
