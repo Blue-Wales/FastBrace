@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : health.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 健康检查接口
 """

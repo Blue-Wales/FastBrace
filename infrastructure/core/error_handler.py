@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : error_handler.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 框架异常处理
 """

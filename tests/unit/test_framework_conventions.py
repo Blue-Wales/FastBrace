@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : test_framework_conventions.py
-@Author  : zhouguangming
+@Author  : Blue-Wales
 @Date    : 2026/07/29 00:00
 @Desc    : 脚手架目录与品牌约定测试
 """

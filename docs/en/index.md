@@ -17,7 +17,7 @@ hero:
       link: /en/advanced/architecture/domain-layer
     - theme: alt
       text: GitHub
-      link: https://github.com/Zhouguangminggit/FastBrace
+      link: https://github.com/Blue-Wales/FastBrace
 
 features:
   - icon: 🏗️

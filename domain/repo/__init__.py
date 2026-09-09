@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : __init__.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 领域仓储层包初始化
 """

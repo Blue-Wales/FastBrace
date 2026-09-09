@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : permission_constants.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-25
 @Desc    : 权限资源初始化常量配置
 """

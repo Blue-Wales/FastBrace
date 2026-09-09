@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : generate_encrypted_password.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-25
 @Desc    : RSA 密码加密工具，用于生成接口测试所需的加密密码
 

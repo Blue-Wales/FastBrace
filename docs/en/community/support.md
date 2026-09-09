@@ -4,8 +4,8 @@ If you run into problems while using FastBrace, you can get help through the fol
 
 ## Reporting Issues
 
-- **GitHub Issues**: submit bug reports and feature suggestions to [GitHub Issues](https://github.com/Zhouguangminggit/FastBrace/issues); please include reproduction steps and environment details whenever possible
-- **GitHub Discussions**: for usage questions and design discussions, visit [GitHub Discussions](https://github.com/Zhouguangminggit/FastBrace/discussions)
+- **GitHub Issues**: submit bug reports and feature suggestions to [GitHub Issues](https://github.com/Blue-Wales/FastBrace/issues); please include reproduction steps and environment details whenever possible
+- **GitHub Discussions**: for usage questions and design discussions, visit [GitHub Discussions](https://github.com/Blue-Wales/FastBrace/discussions)
 
 ## Before You Ask
 

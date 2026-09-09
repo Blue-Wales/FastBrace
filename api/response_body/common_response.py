@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : common_response.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 通用响应体模型
 """

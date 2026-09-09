@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : permission_init.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-25
 @Desc    : 权限资源初始化脚本，在 Docker 部署时初始化权限资源数据
 

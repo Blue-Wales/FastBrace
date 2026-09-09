@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : enum_var.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

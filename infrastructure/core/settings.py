@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : settings.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 框架配置管理
 """

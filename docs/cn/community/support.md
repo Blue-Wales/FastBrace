@@ -4,8 +4,8 @@
 
 ## 问题反馈
 
-- **GitHub Issues**：Bug 报告与功能建议请提交至 [GitHub Issues](https://github.com/Zhouguangminggit/FastBrace/issues)，提交时请尽量附带复现步骤与环境信息
-- **GitHub Discussions**：使用咨询、方案讨论请前往 [GitHub Discussions](https://github.com/Zhouguangminggit/FastBrace/discussions)
+- **GitHub Issues**：Bug 报告与功能建议请提交至 [GitHub Issues](https://github.com/Blue-Wales/FastBrace/issues)，提交时请尽量附带复现步骤与环境信息
+- **GitHub Discussions**：使用咨询、方案讨论请前往 [GitHub Discussions](https://github.com/Blue-Wales/FastBrace/discussions)
 
 ## 提问前的准备
 

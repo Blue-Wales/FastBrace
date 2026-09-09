@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : user.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 用户 DTO 数据模型
 """

@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : database_util.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 数据库工具模块
 """

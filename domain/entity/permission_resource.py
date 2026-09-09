@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : permission_resource.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 权限资源实体类
 """

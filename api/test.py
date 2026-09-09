@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : test.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 测试辅助接口（仅非生产环境注册）
 """

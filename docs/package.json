@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zhouguangminggit/FastBrace.git"
+    "url": "git+https://github.com/Blue-Wales/FastBrace.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Zhouguangminggit/FastBrace/issues"
+    "url": "https://github.com/Blue-Wales/FastBrace/issues"
   },
-  "homepage": "https://github.com/Zhouguangminggit/FastBrace#readme",
+  "homepage": "https://github.com/Blue-Wales/FastBrace#readme",
   "devDependencies": {
     "vitepress": "^1.6.4"
   }

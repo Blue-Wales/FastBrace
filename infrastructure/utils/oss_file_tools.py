@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : oss_file_tools.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

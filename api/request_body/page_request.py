@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : page_request.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 通用分页请求体模型
 """

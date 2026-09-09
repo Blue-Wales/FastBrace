@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : security.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 安全相关接口
 """

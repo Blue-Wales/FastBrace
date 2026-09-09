@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : department_request.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 部门相关请求体模型
 """

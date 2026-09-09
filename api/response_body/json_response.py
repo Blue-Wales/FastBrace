@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : json_response.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 基础 JSON 响应体模型
 """

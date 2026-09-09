@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : role_repo.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 角色仓储实现（基于 SQLAlchemy 与闭包表）
 """

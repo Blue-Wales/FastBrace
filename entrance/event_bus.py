@@ -1,7 +1,7 @@
 """
 @Project : FastBrace
 @File    : event_bus.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : admin_constants.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-23
 """
 

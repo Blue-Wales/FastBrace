@@ -120,7 +120,7 @@ digital-process-backend/
 """
 @Project : FastBrace
 @File    : {filename}.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : {YYYY-MM-DD}
 @Desc    : {简要描述}
 """

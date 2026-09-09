@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : user_events.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 用户领域事件
 """

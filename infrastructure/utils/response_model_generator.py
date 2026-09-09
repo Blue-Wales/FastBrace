@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : response_model_generator.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

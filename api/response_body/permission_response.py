@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : permission_response.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 权限相关响应体模型
 """

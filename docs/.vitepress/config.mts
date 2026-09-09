@@ -76,7 +76,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/Zhouguangminggit/FastBrace'
+        link: 'https://github.com/Blue-Wales/FastBrace'
       }
     ]
   },

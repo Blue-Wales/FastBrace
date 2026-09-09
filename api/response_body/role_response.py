@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : role_response.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 角色相关响应体模型
 """

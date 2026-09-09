@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : swagger_ui_patch.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

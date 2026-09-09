@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : role.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 角色数据模型（含闭包表）
 """

@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : email_service.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 邮件领域服务（调用三方 SMTP 服务）
 """

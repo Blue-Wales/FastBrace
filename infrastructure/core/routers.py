@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : routers.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : 路由配置
 """

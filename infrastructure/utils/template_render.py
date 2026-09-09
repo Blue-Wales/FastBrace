@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : template_render.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 """
 

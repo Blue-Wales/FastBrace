@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : init_database.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-25
 @Desc    : 数据库初始化脚本，创建数据库、表结构并初始化管理员用户
 

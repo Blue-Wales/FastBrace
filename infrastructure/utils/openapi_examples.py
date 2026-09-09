@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : openapi_examples.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : OpenAPI 文档示例增强
 """

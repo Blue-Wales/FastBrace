@@ -3,7 +3,7 @@
 """
 @Project : FastBrace
 @File    : container.py
-@Author  : bright
+@Author  : Blue-Wales
 @Date    : 2026-08-22
 @Desc    : IoC 容器
 """
